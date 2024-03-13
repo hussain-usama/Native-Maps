@@ -7,10 +7,14 @@ export const requestAccessLocation=async()=>{
     if (status !== 'granted') {
         return 'Permission to access location was denied';
     }
+    return true
 }
 
 export const getCurrentLocation=async()=>{
-    await requestAccessLocation()
+    let access= await requestAccessLocation()
+    if(!access){
+        return
+    }
     let location = await Location.getCurrentPositionAsync({});
     if(location){
         return location
@@ -19,13 +23,18 @@ export const getCurrentLocation=async()=>{
 }
 
 export const getWatchedLoaction=async()=>{
-    await requestAccessLocation()
-    Location.watchPositionAsync({
+    let access= await requestAccessLocation()
+    if(!access){
+        return
+    }
+    console.log("CHALA")
+    let location = await Location.watchPositionAsync({
         accuracy:6,
         timeInterval:1000,
         distanceInterval:1 // km
-    },(location)=>{
-        return location
     })
-
+    if(location){
+        return location
+    }
+    return 'Loading...'
 }

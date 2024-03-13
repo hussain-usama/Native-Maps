@@ -5,21 +5,19 @@ import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { getCurrentLocation, getWatchedLoaction } from '../utils/ExpoLocation';
 
-export default function Maps() {
-
-    const [location, setLocation] = useState(null)
+export default function Maps({location,setLocation}) {
 
     useEffect(() => {
         (async () => {
             let locationResponse = await getCurrentLocation()
-            console.log('location response', locationResponse)
+            // let watchPosition=await getWatchedLoaction() // if calling within the component(pickup/destination) then it works 
+            // console.log(watchPosition,'watchPosition') 
             setLocation(locationResponse)
         })()
     }, [])
 
-    console.log(location,'location')
     if (!location) {
-        return <Text>Loading...</Text>
+        return <Text>Loading Maps...</Text>
     }
     return (
         <>
