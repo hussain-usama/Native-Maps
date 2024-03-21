@@ -3,7 +3,9 @@ import Maps from "../components/Maps";
 import { useState } from "react";
 
 
-export default function DestinationScreen({ navigation }) {
+export default function DestinationScreen({route, navigation }) {
+    const pickUpDestination = route?.params;
+    console.log(pickUpDestination, 'pickup ondestination')
     const [location,setLocation]=useState(null)
 
     return (
